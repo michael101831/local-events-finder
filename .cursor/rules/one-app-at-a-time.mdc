@@ -1,0 +1,12 @@
+---
+description: Change only one app in a turn
+alwaysApply: true
+---
+
+# One app at a time
+
+When more than one app is in the workspace, change only the app Michael asked about.
+
+- Do not edit, deploy, or otherwise change a second app in the same turn.
+- If the task needs the other app, finish the requested app and say what is left for a later turn.
+- LocalFind and Daybook are separate apps.

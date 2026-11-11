@@ -1,0 +1,112 @@
+@import "tailwindcss";
+
+@theme {
+  --font-display: "Fraunces", ui-serif, Georgia, serif;
+  --font-sans: "Outfit", ui-sans-serif, system-ui, sans-serif;
+  --color-paper: #f4efe6;
+  --color-ink: #12202b;
+  --color-amber: #e8a317;
+  --color-card: #fffaf3;
+}
+
+html {
+  color-scheme: light;
+  height: 100%;
+}
+
+body,
+#root {
+  height: 100%;
+}
+
+body {
+  margin: 0;
+  background: var(--color-paper);
+  color: var(--color-ink);
+  font-family: var(--font-sans);
+}
+
+:focus-visible {
+  outline: 2px solid var(--color-ink);
+  outline-offset: 2px;
+}
+
+.chip-row {
+  scrollbar-width: none;
+}
+
+.chip-row::-webkit-scrollbar {
+  display: none;
+}
+
+.localfind-pin {
+  background: transparent;
+  border: none;
+}
+
+.pin {
+  display: block;
+  width: 100%;
+  height: 100%;
+  border-radius: 999px;
+  background: #e8a317;
+  border: 2px solid #12202b;
+  box-shadow: 0 1px 4px rgb(18 32 43 / 35%);
+}
+
+.pin-selected {
+  background: #12202b;
+  border-color: #e8a317;
+  box-shadow: 0 0 0 6px rgb(232 163 23 / 35%);
+}
+
+.leaflet-container {
+  height: 100%;
+  width: 100%;
+  background: #e7e0d2;
+  font-family: var(--font-sans);
+}
+
+.leaflet-control-attribution {
+  background: rgb(244 239 230 / 88%) !important;
+  color: rgb(18 32 43 / 70%) !important;
+  font-size: 11px !important;
+}
+
+.detail-in {
+  animation: detail-in 180ms ease-out;
+}
+
+@keyframes detail-in {
+  from {
+    transform: translateY(8px);
+    opacity: 0;
+  }
+  to {
+    transform: none;
+    opacity: 1;
+  }
+}
+
+@media (min-width: 768px) {
+  .detail-in {
+    animation-name: detail-in-desktop;
+  }
+}
+
+@keyframes detail-in-desktop {
+  from {
+    transform: translateX(16px);
+    opacity: 0;
+  }
+  to {
+    transform: none;
+    opacity: 1;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .detail-in {
+    animation: none;
+  }
+}

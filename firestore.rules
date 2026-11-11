@@ -1,0 +1,41 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+    function bookmarkOk(eventId) {
+      let data = request.resource.data;
+      return data.keys().hasOnly(['id', 'name', 'url', 'image', 'localDate', 'localTime', 'venue', 'city', 'lat', 'lng', 'price', 'category', 'distance', 'savedAt'])
+        && data.id == eventId
+        && data.id is string
+        && data.id.size() > 0
+        && data.id.size() < 128
+        && data.name is string
+        && data.name.size() > 0
+        && data.name.size() < 300
+        && data.url is string
+        && data.url.size() < 2000
+        && (data.image == null || (data.image is string && data.image.size() < 2000))
+        && (data.localDate == null || (data.localDate is string && data.localDate.size() < 40))
+        && (data.localTime == null || (data.localTime is string && data.localTime.size() < 40))
+        && data.venue is string
+        && data.venue.size() < 300
+        && data.city is string
+        && data.city.size() < 120
+        && (data.lat == null || data.lat is number)
+        && (data.lng == null || data.lng is number)
+        && (data.price == null || (data.price is string && data.price.size() < 80))
+        && data.category is string
+        && data.category.size() < 80
+        && data.distance == null
+        && data.savedAt is number;
+    }
+
+    match /users/{userId}/bookmarks/{eventId} {
+      allow read, delete: if request.auth != null && request.auth.uid == userId;
+      allow create, update: if request.auth != null && request.auth.uid == userId && bookmarkOk(eventId);
+    }
+
+    match /{document=**} {
+      allow read, write: if false;
+    }
+  }
+}

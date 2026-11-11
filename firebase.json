@@ -1,0 +1,51 @@
+{
+  "functions": [
+    {
+      "source": "functions",
+      "codebase": "default",
+      "predeploy": ["npm --prefix functions run build"],
+      "ignore": ["node_modules", ".git", "firebase-debug.log", "firebase-debug.*.log", "*.local"]
+    }
+  ],
+  "firestore": {
+    "rules": "firestore.rules"
+  },
+  "hosting": {
+    "public": "dist",
+    "ignore": ["firebase.json", "**/.*", "**/node_modules/**"],
+    "rewrites": [
+      {
+        "source": "/api/events",
+        "function": {
+          "functionId": "events",
+          "region": "us-central1"
+        }
+      },
+      {
+        "source": "/api/ask",
+        "function": {
+          "functionId": "ask",
+          "region": "us-central1"
+        }
+      },
+      {
+        "source": "/api/bookmarks",
+        "function": {
+          "functionId": "bookmarks",
+          "region": "us-central1"
+        }
+      },
+      {
+        "source": "/api/bookmarks/feed",
+        "function": {
+          "functionId": "bookmarks",
+          "region": "us-central1"
+        }
+      },
+      {
+        "source": "**",
+        "destination": "/index.html"
+      }
+    ]
+  }
+}

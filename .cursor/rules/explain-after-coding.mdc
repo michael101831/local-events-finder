@@ -1,0 +1,13 @@
+---
+description: After coding, ask whether to explain how it works
+alwaysApply: true
+---
+
+# Explain after coding
+
+After you write, change, or fix code, end the response by asking Michael if he wants an explanation of the code and how it works.
+
+- Ask once, after the result. Do not explain the implementation unless he says yes.
+- Skip the question when the turn did not change code.
+- When he wants an explanation, show the code with the explanation. Cite the relevant lines in ```startLine:endLine:filepath blocks so each point sits next to the source it describes. Show enough of each piece to follow the flow. Do not paste whole files.
+---
