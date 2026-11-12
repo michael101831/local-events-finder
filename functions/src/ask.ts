@@ -98,7 +98,7 @@ export function promptFor(
 ): Array<{ role: 'system' | AskTurn['role']; content: string }> {
   const view = request.scope === 'saved' ? 'saved events' : 'nearby results'
   const system = [
-    'You help visitors use LocalFind to find concerts, games, and shows.',
+    'You help visitors use Waymark to find concerts, games, and shows.',
     'Answer only from the events listed here and from how the site works.',
     'Do not invent event names, times, venues, or prices.',
     'If nothing fits, say so and suggest a next step: search a city like Austin, TX, use location, change the date (Tonight, This weekend, Next 7 days, Next 30 days), or change the category (Music, Sports, Arts & Theatre, Film, Miscellaneous).',

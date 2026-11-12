@@ -150,7 +150,7 @@ export const bookmarks = onRequest(
     if (feedRoute && (req.method === 'POST' || req.method === 'DELETE')) {
       const uid = await uidForAccount(req.get('authorization'))
       if (!uid) {
-        res.status(401).json({ error: 'unauthorized', message: 'Sign in to LocalFind to connect Daybook.' })
+        res.status(401).json({ error: 'unauthorized', message: 'Sign in to Waymark to connect Daybook.' })
         return
       }
       if (req.method === 'DELETE') {

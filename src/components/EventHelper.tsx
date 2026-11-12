@@ -85,7 +85,7 @@ export function EventHelper({ place, scope, filters, events }: Props) {
         >
           <div className="flex items-start justify-between gap-3 border-b border-ink/10 px-4 py-3">
             <div>
-              <h2 className="font-display text-xl leading-tight">Ask LocalFind</h2>
+              <h2 className="font-display text-xl leading-tight">Ask Waymark</h2>
               <p className="text-sm text-ink/65">Questions about the events on this page.</p>
             </div>
             <button

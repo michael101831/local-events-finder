@@ -69,7 +69,7 @@ export function Header({
               />
               <circle cx="12" cy="9" r="2.5" className="fill-paper" />
             </svg>
-            LocalFind
+            Waymark
           </h1>
           <p className="mt-1 pl-8 text-sm text-ink/65">Find Events Near You</p>
         </div>
