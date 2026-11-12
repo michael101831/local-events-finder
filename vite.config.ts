@@ -7,6 +7,7 @@ import type { Connect, Plugin } from 'vite'
 import { defineConfig } from 'vite'
 import { completeAsk, parseAskRequest } from './functions/src/ask.ts'
 import { DAILY_ASK_CAP, MINUTE_ASK_CAP, takeMinuteSlot, utcDay } from './functions/src/limits.ts'
+import { searchPublicEvents } from './functions/src/catalog.ts'
 import { sanitizeParams } from './functions/src/query.ts'
 
 function valueFromEnvFile(text: string, wanted: string): string | undefined {
@@ -81,34 +82,11 @@ async function handleEvents(
     return
   }
 
-  const apiKey = readEnv('TICKETMASTER_API_KEY')
-  if (!apiKey) {
-    sendJson(res, 500, {
-      error: 'missing_key',
-      message: 'Add TICKETMASTER_API_KEY to .env, then search again.',
-    })
-    return
-  }
-
   const raw = req.url ?? ''
   const query = raw.includes('?') ? raw.slice(raw.indexOf('?') + 1) : ''
   const params = sanitizeParams(new URLSearchParams(query))
-  params.set('apikey', apiKey)
-
-  try {
-    const response = await fetch(
-      `https://app.ticketmaster.com/discovery/v2/events.json?${params.toString()}`,
-    )
-    const body = await response.text()
-    res.statusCode = response.status
-    res.setHeader('Content-Type', response.headers.get('content-type') ?? 'application/json')
-    res.end(body)
-  } catch {
-    sendJson(res, 502, {
-      error: 'upstream',
-      message: 'Could not reach Ticketmaster.',
-    })
-  }
+  const result = await searchPublicEvents(params, readEnv('TICKETMASTER_API_KEY') ?? '')
+  sendJson(res, result.status, result.body)
 }
 
 let askMinute = { start: 0, count: 0 }

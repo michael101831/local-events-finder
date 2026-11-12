@@ -49,6 +49,8 @@ export type EventQuery = {
   page?: number
   size?: number
   sort?: string
+  datePreset?: DatePreset
+  timeZone?: string
 }
 
 export type EventsResult = {

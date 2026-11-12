@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import { formatMiles, formatWhen, venueLine } from '../lib/format.ts'
+import { eventLinkLabel, formatMiles, formatWhen, venueLine } from '../lib/format.ts'
 import type { EventItem } from '../types.ts'
 import { Heart } from './Heart.tsx'
 
@@ -54,6 +54,14 @@ export function EventCard({ event, selected, saved, onSelect, onToggleSave }: Pr
           ) : null}
         </div>
       </button>
+      {eventLinkLabel(event.url) === 'Event page' ? (
+        <div className="px-4 pb-3">
+          <a href={event.url} target="_blank" rel="noreferrer" className="text-sm font-semibold text-ink underline">
+            Event page
+            <span className="sr-only"> for {event.name} (opens in a new tab)</span>
+          </a>
+        </div>
+      ) : null}
       <button
         type="button"
         className={`absolute top-3 right-3 z-10 grid h-11 w-11 cursor-pointer place-items-center rounded-full shadow ${

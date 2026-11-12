@@ -3,4 +3,4 @@ export const chip =
 export const chipOn =
   'shrink-0 cursor-pointer rounded-full border border-ink bg-ink px-3 py-2 text-sm font-medium text-paper'
 export const field =
-  'min-w-0 rounded-full border border-ink/30 bg-white px-4 py-2 text-sm text-ink outline-none placeholder:text-ink/45'
+  'min-w-0 rounded-full border border-ink/30 bg-card px-4 py-2 text-sm text-ink outline-none placeholder:text-ink/45'

@@ -9,6 +9,8 @@ const ALLOWED_PARAMS = new Set([
   'endDateTime',
   'classificationName',
   'page',
+  'datePreset',
+  'timeZone',
 ])
 
 const CATEGORIES = new Set(['Music', 'Sports', 'Arts & Theatre', 'Film', 'Miscellaneous'])
@@ -45,6 +47,14 @@ export function sanitizeParams(incoming: URLSearchParams): URLSearchParams {
 
   const page = params.get('page')
   if (page != null && !/^\d+$/.test(page)) params.delete('page')
+
+  const datePreset = params.get('datePreset')
+  if (datePreset && !['tonight', 'weekend', '7days', '30days'].includes(datePreset)) params.delete('datePreset')
+
+  const timeZone = params.get('timeZone')
+  if (timeZone && (timeZone.length > 64 || !/^[A-Za-z][A-Za-z0-9_+-]*(?:\/[A-Za-z0-9_+-]+)+$/.test(timeZone))) {
+    params.delete('timeZone')
+  }
 
   params.set('size', '20')
   params.set('sort', 'date,asc')

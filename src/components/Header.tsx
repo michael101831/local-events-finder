@@ -21,6 +21,8 @@ type Props = {
   onCreateAccount: (email: string, password: string) => Promise<boolean>
   onSignIn: (email: string, password: string) => Promise<boolean>
   onSignOut: () => Promise<boolean>
+  dark: boolean
+  onToggleDark: () => void
 }
 
 export function Header({
@@ -42,6 +44,8 @@ export function Header({
   onCreateAccount,
   onSignIn,
   onSignOut,
+  dark,
+  onToggleDark,
 }: Props) {
   const [cityDraft, setCityDraft] = useState('')
   const [accountOpen, setAccountOpen] = useState(false)
@@ -56,10 +60,19 @@ export function Header({
   return (
     <header className="min-w-0 border-b border-ink/10 bg-paper/95 backdrop-blur">
       <div className="flex flex-wrap items-center gap-x-3 gap-y-2 px-4 py-3">
-        <h1 className="flex min-w-0 items-center font-display text-2xl leading-none font-semibold tracking-tight sm:text-[1.7rem]">
-          <span className="mr-2 inline-block h-3 w-3 rounded-full bg-amber" aria-hidden="true" />
-          LocalFind
-        </h1>
+        <div className="min-w-0">
+          <h1 className="flex min-w-0 items-center font-display text-2xl leading-none font-semibold tracking-tight sm:text-[1.7rem]">
+            <svg className="mr-2 h-6 w-6 shrink-0 text-amber" viewBox="0 0 24 24" aria-hidden="true">
+              <path
+                fill="currentColor"
+                d="M12 2c-3.87 0-7 3.13-7 7 0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7z"
+              />
+              <circle cx="12" cy="9" r="2.5" className="fill-paper" />
+            </svg>
+            LocalFind
+          </h1>
+          <p className="mt-1 pl-8 text-sm text-ink/65">Find Events Near You</p>
+        </div>
         <div className="ml-auto flex items-center gap-2">
           <AccountButton open={accountOpen} onToggle={() => setAccountOpen((value) => !value)} />
           <button
@@ -70,6 +83,9 @@ export function Header({
           >
             Saved
             <span className="ml-1 tabular-nums">{savedCount}</span>
+          </button>
+          <button type="button" className={dark ? chipOn : chip} aria-pressed={dark} onClick={onToggleDark}>
+            Dark
           </button>
           <div className="flex md:hidden" role="group" aria-label="View">
             <button

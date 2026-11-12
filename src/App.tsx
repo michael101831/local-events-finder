@@ -11,6 +11,7 @@ import { useAuth } from './hooks/useAuth.ts'
 import { useBookmarks } from './hooks/useBookmarks.ts'
 import { useGeolocation, type GeoStatus } from './hooks/useGeolocation.ts'
 import { useIsDesktop } from './hooks/useIsDesktop.ts'
+import { useTheme } from './hooks/useTheme.ts'
 import { dateRange, favoriteInRange, toTicketmasterDate } from './lib/dates.ts'
 import { matchesKeyword } from './lib/filters.ts'
 import { parsePlace } from './lib/place.ts'
@@ -29,6 +30,7 @@ export default function App() {
   const account = useAuth()
   const favorites = useBookmarks(account.user)
   const isDesktop = useIsDesktop()
+  const theme = useTheme()
   const [keyword, setKeyword] = useState('')
   const debouncedKeyword = useDebounced(keyword, 300)
   const [cityQuery, setCityQuery] = useState<string | null>(null)
@@ -47,6 +49,8 @@ export default function App() {
       classificationName: category === 'all' ? undefined : category,
       startDateTime: toTicketmasterDate(range.start),
       endDateTime: toTicketmasterDate(range.end),
+      datePreset: preset,
+      timeZone: Intl.DateTimeFormat().resolvedOptions().timeZone,
       size: 20,
       sort: 'date,asc',
     }
@@ -198,6 +202,8 @@ export default function App() {
         onCreateAccount={account.createAccount}
         onSignIn={account.signIn}
         onSignOut={account.signOut}
+        dark={theme.dark}
+        onToggleDark={theme.toggle}
       />
       <FilterBar
         preset={preset}
@@ -265,11 +271,11 @@ export default function App() {
         <>
           <button
             type="button"
-            className="fixed inset-0 z-30 bg-ink/40"
+            className="fixed inset-0 z-30 bg-scrim/50"
             aria-label="Close event details"
             onClick={closeDetail}
           />
-          <div className="detail-in fixed inset-x-0 bottom-0 z-40 overflow-hidden rounded-t-3xl shadow-[0_-12px_40px_rgb(18_32_43_/_18%)]">
+          <div className="detail-in fixed inset-x-0 bottom-0 z-40 overflow-hidden rounded-t-3xl shadow-[0_-12px_40px_rgb(0_0_0_/_35%)]">
             <EventDetail
               event={selected}
               saved={savedIds.has(selected.id)}

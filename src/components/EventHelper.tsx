@@ -81,7 +81,7 @@ export function EventHelper({ place, scope, filters, events }: Props) {
         <section
           id={panelId}
           aria-label="Ask about events"
-          className="pointer-events-auto flex max-h-[min(32rem,calc(100dvh-6.5rem))] w-full flex-col overflow-hidden rounded-3xl border border-ink/10 bg-card shadow-[0_16px_50px_rgb(18_32_43_/_18%)] sm:w-[24rem]"
+          className="pointer-events-auto flex max-h-[min(32rem,calc(100dvh-6.5rem))] w-full flex-col overflow-hidden rounded-3xl border border-ink/10 bg-card shadow-[0_16px_50px_rgb(0_0_0_/_28%)] sm:w-[24rem]"
         >
           <div className="flex items-start justify-between gap-3 border-b border-ink/10 px-4 py-3">
             <div>
@@ -146,7 +146,7 @@ export function EventHelper({ place, scope, filters, events }: Props) {
             />
             <button
               type="submit"
-              className="shrink-0 cursor-pointer rounded-full bg-amber px-4 py-2 text-sm font-semibold text-ink disabled:cursor-not-allowed disabled:opacity-40"
+              className="shrink-0 cursor-pointer rounded-full bg-amber px-4 py-2 text-sm font-semibold text-on-amber disabled:cursor-not-allowed disabled:opacity-40"
               disabled={pending || draft.trim().length === 0}
             >
               Send
@@ -156,7 +156,7 @@ export function EventHelper({ place, scope, filters, events }: Props) {
       ) : null}
       <button
         type="button"
-        className="pointer-events-auto cursor-pointer rounded-full bg-ink px-4 py-3 text-sm font-semibold text-paper shadow-[0_10px_30px_rgb(18_32_43_/_25%)]"
+        className="pointer-events-auto cursor-pointer rounded-full bg-ink px-4 py-3 text-sm font-semibold text-paper shadow-[0_10px_30px_rgb(0_0_0_/_35%)]"
         aria-expanded={open}
         aria-controls={panelId}
         onClick={() => setOpen((value) => !value)}

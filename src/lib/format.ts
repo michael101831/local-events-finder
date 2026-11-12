@@ -26,6 +26,16 @@ export function formatMiles(miles: number | null): string | null {
   return `${Math.round(miles)} mi`
 }
 
+export function eventLinkLabel(url: string): 'Event page' | 'Tickets' | null {
+  if (!url) return null
+  try {
+    if (new URL(url).hostname === 'eventing.ing') return 'Event page'
+  } catch {
+    return 'Tickets'
+  }
+  return 'Tickets'
+}
+
 export function venueLine(venue: string, city: string): string {
   const place = [venue, city].filter(Boolean).join(' · ')
   return place || 'Venue to be announced'

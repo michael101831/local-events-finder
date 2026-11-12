@@ -1,5 +1,5 @@
 import { useEffect, useRef } from 'react'
-import { formatMiles, formatWhen, venueLine } from '../lib/format.ts'
+import { eventLinkLabel, formatMiles, formatWhen, venueLine } from '../lib/format.ts'
 import { chip, chipOn } from '../lib/styles.ts'
 import type { EventItem } from '../types.ts'
 import { Heart } from './Heart.tsx'
@@ -53,14 +53,14 @@ export function EventDetail({ event, saved, onToggleSave, onClose }: Props) {
         <p className="text-base text-ink/70">{venueLine(event.venue, event.city)}</p>
         {distance ? <p className="text-sm text-ink/70">{distance} away</p> : null}
         <p className="text-sm text-ink/70">{event.price ?? 'Price varies'}</p>
-        {event.url ? (
+        {eventLinkLabel(event.url) ? (
           <a
             href={event.url}
             target="_blank"
             rel="noreferrer"
-            className="mt-2 inline-flex w-fit items-center justify-center rounded-full bg-amber px-4 py-2.5 text-sm font-semibold text-ink hover:opacity-90"
+            className="mt-2 inline-flex w-fit items-center justify-center rounded-full bg-amber px-4 py-2.5 text-sm font-semibold text-on-amber hover:opacity-90"
           >
-            Tickets
+            {eventLinkLabel(event.url)}
             <span className="sr-only"> (opens in a new tab)</span>
           </a>
         ) : null}

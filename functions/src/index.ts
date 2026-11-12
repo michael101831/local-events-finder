@@ -2,6 +2,7 @@ import { defineString } from 'firebase-functions/params'
 import { onRequest } from 'firebase-functions/v2/https'
 import { completeAsk, parseAskRequest } from './ask.js'
 import { listDaybookEvents, removeFeed, replaceFeed, uidForAccount, uidForRead } from './bookmarkFeed.js'
+import { searchPublicEvents } from './catalog.js'
 import { sanitizeParams } from './query.js'
 import { askLimitMessage, bookmarkLimitMessage, reserveAsk, reserveBookmarks, reserveSearch, searchLimitMessage } from './usageGate.js'
 
@@ -41,32 +42,10 @@ export const events = onRequest(
       return
     }
 
-    const apiKey = ticketmasterApiKey.value()
-    if (!apiKey) {
-      res.status(500).json({
-        error: 'missing_key',
-        message: 'Add TICKETMASTER_API_KEY to .env, then search again.',
-      })
-      return
-    }
-
     const params = sanitizeParams(incomingParams(req.originalUrl || req.url))
-    params.set('apikey', apiKey)
-
-    try {
-      const response = await fetch(
-        `https://app.ticketmaster.com/discovery/v2/events.json?${params.toString()}`,
-      )
-      const body = await response.text()
-      res.setHeader('Cache-Control', 'no-store')
-      res.setHeader('Content-Type', response.headers.get('content-type') ?? 'application/json')
-      res.status(response.status).send(body)
-    } catch {
-      res.status(502).json({
-        error: 'upstream',
-        message: 'Could not reach Ticketmaster.',
-      })
-    }
+    const result = await searchPublicEvents(params, ticketmasterApiKey.value())
+    res.setHeader('Cache-Control', 'no-store')
+    res.status(result.status).json(result.body)
   },
 )
 

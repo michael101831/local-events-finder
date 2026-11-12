@@ -7,6 +7,15 @@
   --color-ink: #12202b;
   --color-amber: #e8a317;
   --color-card: #fffaf3;
+  --color-on-amber: #12202b;
+  --color-scrim: #12202b;
+}
+
+html.dark {
+  color-scheme: dark;
+  --color-paper: #171410;
+  --color-ink: #f3eee6;
+  --color-card: #241f1a;
 }
 
 html {

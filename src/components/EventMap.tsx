@@ -148,7 +148,7 @@ export function EventMap({ events, selectedId, onSelect, userCoords, active }: P
         )}
       </MapContainer>
       {events.length > 0 && points.length === 0 ? (
-        <p className="pointer-events-none absolute bottom-8 left-1/2 z-10 max-w-xs -translate-x-1/2 rounded-full bg-paper/90 px-4 py-2 text-center text-sm text-ink/70 shadow">
+        <p className="pointer-events-none absolute bottom-8 left-1/2 z-10 max-w-xs -translate-x-1/2 rounded-full bg-[#f4efe6]/90 px-4 py-2 text-center text-sm text-[#12202b]/70 shadow">
           These events have no venue coordinates.
         </p>
       ) : null}

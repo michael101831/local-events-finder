@@ -1,3 +1,4 @@
+import { isEventItem } from '../lib/bookmark.ts'
 import type { EventItem, EventQuery, EventsResult } from '../types.ts'
 
 export class EventsError extends Error {
@@ -118,6 +119,17 @@ function isPayload(value: unknown): value is TmPayload {
   return typeof value === 'object' && value != null
 }
 
+function isListedPage(value: unknown): value is EventsResult {
+  if (!value || typeof value !== 'object') return false
+  const page = value as Record<string, unknown>
+  return (
+    Array.isArray(page.events) &&
+    typeof page.page === 'number' &&
+    typeof page.totalPages === 'number' &&
+    typeof page.totalElements === 'number'
+  )
+}
+
 export async function fetchEvents(query: EventQuery, signal?: AbortSignal): Promise<EventsResult> {
   const params = new URLSearchParams()
   for (const [key, value] of Object.entries(query)) {
@@ -162,8 +174,17 @@ export async function fetchEvents(query: EventQuery, signal?: AbortSignal): Prom
     if (response.status === 401) {
       throw new EventsError('unauthorized', 'Ticketmaster rejected the API key.')
     }
-    const detail = isPayload(payload) ? payload.fault?.faultstring || payload.errors?.[0]?.detail : null
+    const detail = isPayload(payload) ? payload.fault?.faultstring || payload.errors?.[0]?.detail || payload.message : null
     throw new EventsError('api', detail || 'Ticketmaster could not return events.')
+  }
+
+  if (isListedPage(payload)) {
+    return {
+      events: payload.events.filter(isEventItem),
+      page: payload.page,
+      totalPages: payload.totalPages,
+      totalElements: payload.totalElements,
+    }
   }
 
   if (!isPayload(payload)) {
